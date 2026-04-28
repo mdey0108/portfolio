@@ -1,37 +1,25 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
-import {
-  SiVisualstudiocode,
-  SiPostman,
-  SiWindows,
-  SiLinux,
-  SiNotepadplusplus,
-  SiOracle,
-} from "react-icons/si";
+import { SiVisualstudiocode, SiPostman, SiWindows, SiLinux, SiNotepadplusplus, SiOracle } from "react-icons/si";
+
+const tools = [
+  { icon: <SiWindows />,         name: "Windows",    joke: "Home of blue screens 💙" },
+  { icon: <SiVisualstudiocode />, name: "VS Code",   joke: "My actual home. 47 extensions strong 🏠" },
+  { icon: <SiPostman />,         name: "Postman",    joke: "Sending requests to APIs that ghost me 📬" },
+  { icon: <SiLinux />,           name: "Linux",      joke: "sudo make this work 🐧" },
+  { icon: <SiNotepadplusplus />, name: "Notepad++",  joke: "The OG, the legend 📝" },
+  { icon: <SiOracle />,          name: "Oracle DB",  joke: "Praying to query gods daily 🙏" },
+];
 
 function Toolstack() {
   return (
-    <Row style={{ justifyContent: "center", paddingBottom: "50px" }}>
-      
-      <Col xs={4} md={2} className="tech-icons">
-        <SiWindows />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiVisualstudiocode />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiPostman />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiLinux />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiNotepadplusplus />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiOracle />
-      </Col>
-    </Row>
+    <div className="skills-grid">
+      {tools.map((tool, i) => (
+        <div key={i} className="tech-icon-wrap" title={`${tool.name} — ${tool.joke}`}>
+          <div className="tech-icons">{tool.icon}</div>
+          <span className="tech-label">{tool.name}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 

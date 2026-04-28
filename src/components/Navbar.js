@@ -1,34 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import {
   AiOutlineHome,
   AiOutlineUser,
-  AiOutlineFundProjectionScreen,
   AiFillGithub,
 } from "react-icons/ai";
-import { CgFileDocument } from "react-icons/cg";
-import { ImBlog } from "react-icons/im";
-import logo from "../Assets/logo.png";
+import { MdOutlineContactMail } from "react-icons/md";
+import { BsTools } from "react-icons/bs";
+import { VscCode } from "react-icons/vsc";
 
 function NavBar() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isExpanded, setIsExpanded]       = useState(false);
+  const [isScrolled, setIsScrolled]       = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
+  // Sticky effect
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY >= 20);
-    };
+    const onScroll = () => setIsScrolled(window.scrollY >= 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  // Active section via IntersectionObserver
+  useEffect(() => {
+    const ids = ["home", "about", "skills", "projects", "contact"];
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.35 }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((o) => o && o.disconnect());
   }, []);
 
   const navItems = [
-    { path: "/", text: "Home", icon: AiOutlineHome },
-    { path: "/about", text: "About", icon: AiOutlineUser },
-    { path: "/project", text: "Projects", icon: AiOutlineFundProjectionScreen },
-    { path: "/resume", text: "Resume", icon: CgFileDocument },
+    { href: "#home",     text: "Home",     Icon: AiOutlineHome },
+    { href: "#about",    text: "About",    Icon: AiOutlineUser },
+    { href: "#skills",   text: "Skills",   Icon: BsTools },
+    { href: "#projects", text: "Projects", Icon: VscCode },
+    { href: "#contact",  text: "Contact",  Icon: MdOutlineContactMail },
   ];
 
   return (
@@ -39,8 +53,8 @@ function NavBar() {
       className={isScrolled ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand as={Link} to="/" className="d-flex">
-          <img src={logo} className="logo" alt="brand" />
+        <Navbar.Brand href="#home" className="d-flex align-items-center text-brand">
+          Mahesh<span className="brand-dot-dev">.Dev</span>
         </Navbar.Brand>
 
         <Navbar.Toggle
@@ -54,34 +68,24 @@ function NavBar() {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            {navItems.map((item) => (
-              <Nav.Item key={item.path}>
+            {navItems.map(({ href, text, Icon }) => (
+              <Nav.Item key={href}>
                 <Nav.Link
-                  as={Link}
-                  to={item.path}
+                  href={href}
                   onClick={() => setIsExpanded(false)}
+                  className={activeSection === href.slice(1) ? "nav-active" : ""}
                 >
-                  <item.icon style={{ marginBottom: "2px" }} /> {item.text}
+                  <Icon style={{ marginBottom: "2px" }} /> {text}
                 </Nav.Link>
               </Nav.Item>
             ))}
-
-            <Nav.Item>
-              <Nav.Link
-                href="https://www.instagram.com/dev_loafer/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ImBlog style={{ marginBottom: "2px" }} /> Blogs
-              </Nav.Link>
-            </Nav.Item>
-
             <Nav.Item>
               <Nav.Link
                 href="https://github.com/mdey0108/"
                 target="_blank"
                 rel="noreferrer"
                 className="github-btn"
+                title="My GitHub — enter at own risk"
               >
                 <AiFillGithub style={{ fontSize: "1.2em" }} />
               </Nav.Link>

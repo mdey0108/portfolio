@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
-// import Github from "./Github";
 import Techstack from "./Techstack";
 import Aboutcard from "./AboutCard";
 import laptopImg from "../../Assets/about.png";
@@ -10,7 +9,6 @@ import Toolstack from "./Toolstack";
 function About() {
   return (
     <Container fluid className="about-section">
-
       <Container>
         <Row style={{ justifyContent: "center", padding: "10px" }}>
           <Col
@@ -34,18 +32,22 @@ function About() {
             <img src={laptopImg} alt="about" className="img-fluid" />
           </Col>
         </Row>
+
         <h1 className="project-heading">
           Professional <strong className="purple">Skillset </strong>
+          <span style={{ fontSize: "0.5em", color: "#a0a0a0" }}>
+            (hover for honest reviews)
+          </span>
         </h1>
-
         <Techstack />
 
         <h1 className="project-heading">
           <strong className="purple">Tools</strong> I use
+          <span style={{ fontSize: "0.5em", color: "#a0a0a0" }}>
+            {" "}(hover for the truth)
+          </span>
         </h1>
         <Toolstack />
-
-        {/* <Github /> */}
       </Container>
       <Particle />
     </Container>
