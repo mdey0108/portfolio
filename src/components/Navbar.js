@@ -6,7 +6,7 @@ import {
   AiFillGithub,
 } from "react-icons/ai";
 import { MdOutlineContactMail } from "react-icons/md";
-import { BsTools } from "react-icons/bs";
+import { BsTools, BsBriefcase } from "react-icons/bs";
 import { VscCode } from "react-icons/vsc";
 
 function NavBar() {
@@ -40,6 +40,7 @@ function NavBar() {
   const navItems = [
     { href: "#home",     text: "Home",     Icon: AiOutlineHome },
     { href: "#about",    text: "About",    Icon: AiOutlineUser },
+    { href: "#journey",  text: "Journey",  Icon: BsBriefcase },
     { href: "#skills",   text: "Skills",   Icon: BsTools },
     { href: "#projects", text: "Projects", Icon: VscCode },
     { href: "#contact",  text: "Contact",  Icon: MdOutlineContactMail },

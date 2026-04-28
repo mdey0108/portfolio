@@ -42,23 +42,56 @@ const easterEggs = [
   "🦄 There's nothing here. Go touch grass.",
 ];
 
-/* ─── Projects data ─── */
 const projects = [
-  { emoji: "🤖", color: "rgba(0,212,255,0.08)", border: "rgba(0,212,255,0.3)",
-    title: "Ollama AI Chatbot",
-    desc: "Multi-user AI chatbot with JWT auth & Spring Boot backend. Actually works in prod — a rare achievement. 🏆",
-    tags: ["Spring Boot", "React", "JWT", "Python"],
-    github: "https://github.com/mdey0108/" },
-  { emoji: "📦", color: "rgba(0,255,136,0.06)", border: "rgba(0,255,136,0.3)",
-    title: "Stock & Sales Manager",
-    desc: "CSV-based inventory app deployed on Railway. My manager asked for Excel, I gave him a full web app. 😎",
-    tags: ["Python", "Flask", "CSV", "Railway"],
-    github: "https://github.com/mdey0108/" },
-  { emoji: "💻", color: "rgba(255,0,110,0.06)", border: "rgba(255,0,110,0.25)",
+  {
+    emoji: "📋",
+    color: "rgba(0,255,136,0.06)", border: "rgba(0,255,136,0.3)",
+    title: "LogKyaKahenge",
+    desc: "AI-based log analysis for batch jobs & enterprise apps. Reads logs so you don't have to — because nobody enjoys reading 10,000 lines of stack traces. 🔍",
+    tags: ["AI", "Log Analysis", "Automation", "Batch Jobs"],
+    github: "https://github.com/mdey0108/logkyakahenge",
+  },
+  {
+    emoji: "🧠",
+    color: "rgba(0,212,255,0.08)", border: "rgba(0,212,255,0.3)",
+    title: "GyaanGuru AI",
+    desc: "Your personal AI learning guru — because asking your manager to explain things twice is awkward. TypeScript-powered, AI-driven learning platform. 🎓",
+    tags: ["TypeScript", "AI", "LLM", "Education"],
+    github: "https://github.com/mdey0108/gyaanguru.ai",
+  },
+  {
+    emoji: "📦",
+    color: "rgba(255,200,0,0.06)", border: "rgba(255,200,0,0.25)",
+    title: "SAS Manager",
+    desc: "Stock & Sales management system. My manager asked for an Excel sheet, I delivered a full web app. He didn't know the difference. 😎",
+    tags: ["JavaScript", "Stock", "Sales", "Management"],
+    github: "https://github.com/mdey0108/SAS-manager-",
+  },
+  {
+    emoji: "📄",
+    color: "rgba(255,0,110,0.06)", border: "rgba(255,0,110,0.25)",
+    title: "ConvertToPDF",
+    desc: "Spring Boot microservice converting non-PDF & TIFF files to PDF/TIFF format. Enterprise-grade file handling — because someone has to do the boring stuff. ☕",
+    tags: ["Java", "Spring Boot", "PDF", "Microservice"],
+    github: "https://github.com/mdey0108/converttopdf",
+  },
+  {
+    emoji: "✍️",
+    color: "rgba(160,100,255,0.07)", border: "rgba(160,100,255,0.28)",
+    title: "Blog App",
+    desc: "Full-featured blog writing platform built on Spring Boot. Write, publish, and pretend you'll post consistently. (Spoiler: you won't.) 📝",
+    tags: ["Java", "Spring Boot", "REST API", "Blog"],
+    github: "https://github.com/mdey0108/blog_app",
+  },
+  {
+    emoji: "💻",
+    color: "rgba(0,255,136,0.04)", border: "rgba(0,255,136,0.2)",
     title: "Dev Portfolio",
-    desc: "You're looking at it. Built with React, confetti, easter eggs & questionable life choices. 🎉",
+    desc: "You're staring at it right now. Cyberpunk React portfolio with confetti, easter eggs, neon cursor & zero meetings required to build. 🎉",
     tags: ["React", "CSS", "Bootstrap", "Web3Forms"],
-    github: "https://github.com/mdey0108/", demo: "#home" },
+    github: "https://github.com/mdey0108/portfolio",
+    demo: "https://mdey0108.github.io/portfolio",
+  },
 ];
 
 function Portfolio() {
@@ -199,6 +232,104 @@ function Portfolio() {
         </Container>
       </section>
 
+      {/* ══ JOURNEY ══ */}
+      <section id="journey" className="journey-section">
+        <Container>
+          <h2 className="section-title">
+            My <span className="green">Journey</span>
+            <span className="section-hint"> — the corporate saga</span>
+          </h2>
+          <Row className="g-4">
+
+            {/* Experience */}
+            <Col md={6}>
+              <h3 className="journey-col-title">💼 Work Experience</h3>
+              <div className="timeline">
+
+                <div className="timeline-item">
+                  <div className="timeline-card">
+                    <div className="timeline-date">Nov 2021 – Present · 3+ yrs</div>
+                    <div className="timeline-title">Software Engineer</div>
+                    <div className="timeline-org">Cognizant Technology Solutions · Kolkata</div>
+                    <ul className="timeline-desc">
+                      <li>Production support for enterprise-level Java / Spring Boot applications</li>
+                      <li>Developed & maintained RESTful APIs and microservices</li>
+                      <li>Built React.js frontends and integrated with backend services</li>
+                      <li>Handled incident management, root cause analysis, and L2/L3 support</li>
+                      <li>Collaborated across cross-functional teams in agile sprints</li>
+                      <li>Wrote Python scripts for automation and data processing</li>
+                    </ul>
+                    <div className="timeline-tags">
+                      {["Java", "Spring Boot", "React", "Python", "Oracle DB", "Git"].map(t => (
+                        <span key={t} className="project-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="timeline-item" style={{ marginTop: "1.4rem" }}>
+                  <div className="timeline-card">
+                    <div className="timeline-date">2020 – 2021 · Training / Internship</div>
+                    <div className="timeline-title">Systems Engineer Trainee</div>
+                    <div className="timeline-org">Infosys Limited</div>
+                    <ul className="timeline-desc">
+                      <li>Completed Infosys Foundation Training Program in Java & enterprise technologies</li>
+                      <li>Worked on Java-based enterprise application development modules</li>
+                      <li>Trained in agile methodologies, SDLC, and software design patterns</li>
+                      <li>Collaborated with cross-functional teams on internal delivery projects</li>
+                    </ul>
+                    <div className="timeline-tags">
+                      {["Java", "SQL", "Agile", "SDLC", "Spring"].map(t => (
+                        <span key={t} className="project-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </Col>
+
+            {/* Education */}
+            <Col md={6}>
+              <h3 className="journey-col-title">🎓 Education</h3>
+              <div className="timeline">
+
+                <div className="timeline-item">
+                  <div className="timeline-card">
+                    <div className="timeline-date">2017 – 2021</div>
+                    <div className="timeline-title">B.Tech — Computer Science & Engineering</div>
+                    <div className="timeline-org">CSIT Durg, Chhattisgarh (CSVTU affiliated)</div>
+                    <ul className="timeline-desc">
+                      <li>Core subjects: DSA, DBMS, OS, Computer Networks, OOP</li>
+                      <li>Developed multiple academic projects in Java & Python</li>
+                      <li>Active participant in coding competitions and tech events</li>
+                    </ul>
+                    <div className="timeline-tags">
+                      {["Java", "Python", "C/C++", "DBMS", "Networking"].map(t => (
+                        <span key={t} className="project-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="timeline-item" style={{ marginTop: "1.4rem" }}>
+                  <div className="timeline-card">
+                    <div className="timeline-date">2015 – 2017</div>
+                    <div className="timeline-title">Higher Secondary — Science (PCM)</div>
+                    <div className="timeline-org">Balrampur, Chhattisgarh</div>
+                    <ul className="timeline-desc">
+                      <li>Physics, Chemistry, Maths — where the real debugging began 🔬</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </Col>
+
+          </Row>
+        </Container>
+      </section>
+
       {/* ══ SKILLS ══ */}
       <section id="skills" className="skills-section">
         <Container>
@@ -219,7 +350,7 @@ function Portfolio() {
             Featured <span className="green">Projects</span>
             <span className="section-hint"> — things I actually built</span>
           </h2>
-          <Row className="g-4 justify-content-center">
+          <Row className="g-4">
             {projects.map((p, i) => (
               <Col md={4} key={i}>
                 <div className="project-card" style={{ "--card-bg": p.color, "--card-border": p.border }}>
@@ -234,8 +365,8 @@ function Portfolio() {
                       <AiFillGithub /> GitHub
                     </a>
                     {p.demo && (
-                      <a href={p.demo} className="project-link project-link-demo">
-                        <BsBoxArrowUpRight /> Demo
+                      <a href={p.demo} target="_blank" rel="noreferrer" className="project-link project-link-demo">
+                        <BsBoxArrowUpRight /> Live
                       </a>
                     )}
                   </div>
