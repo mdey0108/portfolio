@@ -1,22 +1,19 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.d5d65738.css",
-    "main.js": "/portfolio/static/js/main.a5ebe77d.js",
+    "main.css": "/portfolio/static/css/main.d70790bc.css",
+    "main.js": "/portfolio/static/js/main.ee20b4f4.js",
     "static/js/787.1ed0c42c.chunk.js": "/portfolio/static/js/787.1ed0c42c.chunk.js",
     "static/media/avatar.svg": "/portfolio/static/media/avatar.8e52bef6417a9159c5c4e2471adb28c9.svg",
-    "static/media/home-bg.jpg": "/portfolio/static/media/home-bg.f078b796d4202dd8f4ff.jpg",
     "static/media/MaheshKumarResume2.0.pdf": "/portfolio/static/media/MaheshKumarResume2.0.af82a60e2ab45f318edc.pdf",
-    "static/media/home-main.svg": "/portfolio/static/media/home-main.359935c39288e92d4dba5c9f2445b91d.svg",
     "static/media/about.png": "/portfolio/static/media/about.aee0f771fbfc1e7b8fa8.png",
-    "static/media/logo.png": "/portfolio/static/media/logo.1470c21ca01c2dcab1d3.png",
     "static/media/pre.svg": "/portfolio/static/media/pre.4410c5baaa673cc131da.svg",
     "index.html": "/portfolio/index.html",
-    "main.d5d65738.css.map": "/portfolio/static/css/main.d5d65738.css.map",
-    "main.a5ebe77d.js.map": "/portfolio/static/js/main.a5ebe77d.js.map",
+    "main.d70790bc.css.map": "/portfolio/static/css/main.d70790bc.css.map",
+    "main.ee20b4f4.js.map": "/portfolio/static/js/main.ee20b4f4.js.map",
     "787.1ed0c42c.chunk.js.map": "/portfolio/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d5d65738.css",
-    "static/js/main.a5ebe77d.js"
+    "static/css/main.d70790bc.css",
+    "static/js/main.ee20b4f4.js"
   ]
 }
