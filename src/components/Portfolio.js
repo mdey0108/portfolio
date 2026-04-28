@@ -173,9 +173,8 @@ function Portfolio() {
 
             <Col md={5} className="hero-avatar">
               <div className="avatar-ring" onClick={handleAvatarClick} title="Click me 👀">
-                <Tilt tiltMaxAngleX={12} tiltMaxAngleY={12} perspective={800}>
-                  <img src={myImg} className="img-fluid" alt="Mahesh avatar"
-                       style={{ maxHeight: "400px", cursor: "pointer" }} />
+                <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} perspective={900} style={{ width: "100%" }}>
+                  <img src={myImg} className="img-fluid" alt="Mahesh avatar" />
                 </Tilt>
               </div>
               {eggMsg && <p className="easter-egg-msg">{eggMsg}</p>}
