@@ -14,6 +14,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      // Create error output overlay
+      var div = document.createElement('div');
+      div.id = 'early-error-overlay';
+      div.style.position = 'fixed';
+      div.style.inset = '0';
+      div.style.background = '#120a24';
+      div.style.color = '#ff3b5c';
+      div.style.padding = '40px';
+      div.style.fontFamily = 'monospace';
+      div.style.zIndex = '9999999';
+      div.style.overflow = 'auto';
+      div.innerHTML = '<h1 style="color: #00ff88">🚨 Global JS Error Caught</h1>' +
+        '<p style="color: #fff; font-size: 18px">A critical runtime or loading error occurred:</p>' +
+        '<div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 8px; border: 1px solid #ff3b5c; margin-bottom: 20px">' +
+        '<strong>Message:</strong> ' + message + '<br/>' +
+        '<strong>Source:</strong> ' + source + '<br/>' +
+        '<strong>Line:</strong> ' + lineno + ' | <strong>Col:</strong> ' + colno +
+        '</div>' +
+        '<pre style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 8px; border: 1px solid #00d4ff; color: #fff; white-space: pre-wrap">' +
+        (error && error.stack ? error.stack : 'No stack trace available') +
+        '</pre>';
+      if (document.body) {
+        document.body.appendChild(div);
+      } else {
+        window.addEventListener('DOMContentLoaded', function() {
+          document.body.appendChild(div);
+        });
+      }
+      return false;
+    };
+  </script>
 </head>
 
 <body>

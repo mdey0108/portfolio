@@ -23,7 +23,7 @@ function NavBar() {
 
   // Active section via IntersectionObserver
   useEffect(() => {
-    const ids = ["home", "about", "skills", "projects", "contact"];
+    const ids = ["home", "about", "journey", "skills", "projects", "contact"];
     const observers = ids.map((id) => {
       const el = document.getElementById(id);
       if (!el) return null;

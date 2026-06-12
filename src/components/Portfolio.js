@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Tilt from "react-parallax-tilt";
-import Particle from "./Particle";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NavBar from "./Navbar";
 import Footer from "./Footer";
 import ProgressBar from "./ProgressBar";
 import BackToTop from "./BackToTop";
 import CustomCursor from "./CustomCursor";
 import Type from "./Home/Type";
-import Techstack from "./About/Techstack";
-import Toolstack from "./About/Toolstack";
 import Touch from "./Projects/Touch";
-import myImg from "../Assets/avatar.svg";
-import laptopImg from "../Assets/about.png";
 import pdf from "../Assets/MaheshKumarResume2.0.pdf";
+import homeLogo from "../Assets/home-main.svg";
+import laptopImg from "../Assets/about.png";
+import Tilt from "react-parallax-tilt";
 import { ImPointRight } from "react-icons/im";
 import {
   AiFillGithub, AiOutlineTwitter, AiFillInstagram, AiOutlineDownload,
 } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
-import { BsBoxArrowUpRight } from "react-icons/bs";
+
+import HeroScene from "./3d/HeroScene";
+import FloatingGeometry from "./3d/FloatingGeometry";
+import ProjectsCarousel3D from "./3d/ProjectsCarousel3D";
+import SkillsDashboard from "./SkillsDashboard";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ─── Dev wisdom pool ─── */
 const devWisdom = [
@@ -33,84 +38,155 @@ const devWisdom = [
   "SELECT sanity FROM dev WHERE remaining > 0; — 0 rows returned 🗄️",
 ];
 
-/* ─── Easter egg messages ─── */
-const easterEggs = [
-  "👀 Still clicking?",
-  "🤔 Hmm...",
-  "😂 OK keep going",
-  "🎉 You found it! Achievement unlocked: Persistent Clicker",
-  "🦄 There's nothing here. Go touch grass.",
-];
 
-const projects = [
-  {
-    emoji: "📋",
-    color: "rgba(0,255,136,0.06)", border: "rgba(0,255,136,0.3)",
-    title: "LogKyaKahenge",
-    desc: "AI-based log analysis for batch jobs & enterprise apps. Reads logs so you don't have to — because nobody enjoys reading 10,000 lines of stack traces. 🔍",
-    tags: ["AI", "Log Analysis", "Automation", "Batch Jobs"],
-    github: "https://github.com/mdey0108/logkyakahenge",
-  },
-  {
-    emoji: "🧠",
-    color: "rgba(0,212,255,0.08)", border: "rgba(0,212,255,0.3)",
-    title: "GyaanGuru AI",
-    desc: "Your personal AI learning guru — because asking your manager to explain things twice is awkward. TypeScript-powered, AI-driven learning platform. 🎓",
-    tags: ["TypeScript", "AI", "LLM", "Education"],
-    github: "https://github.com/mdey0108/gyaanguru.ai",
-  },
-  {
-    emoji: "📦",
-    color: "rgba(255,200,0,0.06)", border: "rgba(255,200,0,0.25)",
-    title: "SAS Manager",
-    desc: "Stock & Sales management system. My manager asked for an Excel sheet, I delivered a full web app. He didn't know the difference. 😎",
-    tags: ["JavaScript", "Stock", "Sales", "Management"],
-    github: "https://github.com/mdey0108/SAS-manager-",
-  },
-  {
-    emoji: "📄",
-    color: "rgba(255,0,110,0.06)", border: "rgba(255,0,110,0.25)",
-    title: "ConvertToPDF",
-    desc: "Spring Boot microservice converting non-PDF & TIFF files to PDF/TIFF format. Enterprise-grade file handling — because someone has to do the boring stuff. ☕",
-    tags: ["Java", "Spring Boot", "PDF", "Microservice"],
-    github: "https://github.com/mdey0108/converttopdf",
-  },
-  {
-    emoji: "✍️",
-    color: "rgba(160,100,255,0.07)", border: "rgba(160,100,255,0.28)",
-    title: "Blog App",
-    desc: "Full-featured blog writing platform built on Spring Boot. Write, publish, and pretend you'll post consistently. (Spoiler: you won't.) 📝",
-    tags: ["Java", "Spring Boot", "REST API", "Blog"],
-    github: "https://github.com/mdey0108/blog_app",
-  },
-  {
-    emoji: "💻",
-    color: "rgba(0,255,136,0.04)", border: "rgba(0,255,136,0.2)",
-    title: "Dev Portfolio",
-    desc: "You're staring at it right now. Cyberpunk React portfolio with confetti, easter eggs, neon cursor & zero meetings required to build. 🎉",
-    tags: ["React", "CSS", "Bootstrap", "Web3Forms"],
-    github: "https://github.com/mdey0108/portfolio",
-    demo: "https://mdey0108.github.io/portfolio",
-  },
-];
 
+
+
+/* ── CountUp stat item ── */
+function StatItem({ num, label }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    const isInf = num === "∞";
+    const hasPlus = num.includes("+");
+    const raw = parseFloat(num);
+    if (isInf) return; // static
+    const obj = { val: 0 };
+    const ctx = gsap.context(() => {
+      gsap.to(obj, {
+        val: raw,
+        duration: 2,
+        ease: "power1.out",
+        scrollTrigger: { trigger: ref.current, start: "top 88%", toggleActions: "play none none none" },
+        onUpdate() {
+          if (ref.current) ref.current.textContent = Math.round(obj.val) + (hasPlus ? "+" : "");
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, [num]);
+  return (
+    <div className="stat-item">
+      <div className="stat-number" ref={num === "∞" ? null : ref}>{num}</div>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+}
+
+/* ── Hero name letter-by-letter reveal ── */
+function HeroName() {
+  return (
+    <h1 className="hero-name gsap-hero-el">
+      I'M <strong className="main-name">MAHESH KUMAR DEY</strong>
+    </h1>
+  );
+}
+
+/* ── Section heading reveal ── */
+function SectionTitle({ children, className = "" }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ref.current,
+        { opacity: 0, y: 30, skewY: 2 },
+        {
+          opacity: 1, y: 0, skewY: 0, duration: 0.8, ease: "power3.out",
+          scrollTrigger: { trigger: ref.current, start: "top 88%", toggleActions: "play none none none" },
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+  return <h2 ref={ref} className={`section-title ${className}`}>{children}</h2>;
+}
+
+/* ── Timeline card with 3D slide-in ── */
+function TimelineCard({ date, title, org, bullets, tags, delay = 0 }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ref.current,
+        { opacity: 0, x: -40, rotationY: -15, transformPerspective: 800 },
+        {
+          opacity: 1, x: 0, rotationY: 0, duration: 0.8, ease: "power3.out", delay,
+          scrollTrigger: { trigger: ref.current, start: "top 88%", toggleActions: "play none none none" },
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, [delay]);
+  return (
+    <div className="timeline-item" ref={ref}>
+      <div className="timeline-card timeline-card-3d">
+        <div className="timeline-date">{date}</div>
+        <div className="timeline-title">{title}</div>
+        <div className="timeline-org">{org}</div>
+        <ul className="timeline-desc">
+          {bullets.map((b, i) => <li key={i}>{b}</li>)}
+        </ul>
+        {tags && (
+          <div className="timeline-tags">
+            {tags.map(t => <span key={t} className="project-tag">{t}</span>)}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ══ MAIN PORTFOLIO COMPONENT ══ */
 function Portfolio() {
-  const [wisdomIdx,   setWisdomIdx]   = useState(0);
-  const [showWisdom,  setShowWisdom]  = useState(false);
-  const [eggCount,    setEggCount]    = useState(0);
-  const [eggMsg,      setEggMsg]      = useState("");
+  const [wisdomIdx,  setWisdomIdx]  = useState(0);
+  const [showWisdom, setShowWisdom] = useState(false);
+
+  const heroTextRef = useRef(null);
+  const aboutCardRef = useRef(null);
 
   const nextWisdom = () => {
     setWisdomIdx((i) => (i + 1) % devWisdom.length);
     setShowWisdom(true);
   };
 
-  const handleAvatarClick = () => {
-    const next = eggCount + 1;
-    setEggCount(next);
-    setEggMsg(easterEggs[Math.min(next - 1, easterEggs.length - 1)]);
-    if (next >= easterEggs.length) setTimeout(() => { setEggCount(0); setEggMsg(""); }, 3000);
-  };
+  /* ── Hero text entrance ── */
+  useEffect(() => {
+    if (!heroTextRef.current) return;
+    const els = heroTextRef.current.querySelectorAll(".gsap-hero-el");
+    gsap.fromTo(
+      els,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.12, delay: 0.1 }
+    );
+  }, []);
+
+  /* ── About card reveal ── */
+  useEffect(() => {
+    if (!aboutCardRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        aboutCardRef.current,
+        { opacity: 0, x: -50, rotationY: -12, transformPerspective: 900 },
+        {
+          opacity: 1, x: 0, rotationY: 0, duration: 1, ease: "power3.out",
+          scrollTrigger: { trigger: aboutCardRef.current, start: "top 85%", toggleActions: "play none none none" },
+        }
+      );
+      /* paragraph stagger inside the card */
+      const paras = aboutCardRef.current.querySelectorAll("p, .about-list li, .hindi-quote");
+      gsap.fromTo(
+        paras,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.08, delay: 0.3,
+          scrollTrigger: { trigger: aboutCardRef.current, start: "top 85%", toggleActions: "play none none none" },
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
 
   return (
     <div className="portfolio-wrap">
@@ -118,25 +194,28 @@ function Portfolio() {
       <ProgressBar />
       <NavBar />
 
-      {/* ══ HERO ══ */}
+      {/* ══════════════════════════════
+          HERO
+      ══════════════════════════════ */}
       <section id="home" className="hero-section">
-        <Particle />
-        <Container>
+        <HeroScene />
+        <Container style={{ position: "relative", zIndex: 2 }}>
           <Row className="hero-row align-items-center">
-            <Col md={7} className="hero-text">
-              <span className="hero-tag">software_engineer --org="Cognizant" --mode="surviving"</span>
+            <Col md={7} className="hero-text" ref={heroTextRef}>
+              <span className="hero-tag gsap-hero-el">
+                software_engineer --org="Cognizant" --mode="surviving"
+              </span>
 
-              <h2 className="hero-greeting">
+              <h2 className="hero-greeting gsap-hero-el">
                 Hi There!{" "}
                 <span className="wave" role="img" aria-label="wave">👋🏻</span>
               </h2>
-              <h1 className="hero-name">
-                I'M <strong className="main-name">Mahesh Kumar Dey</strong>
-              </h1>
 
-              <div className="hero-type"><Type /></div>
+              <HeroName />
 
-              <ul className="hero-socials">
+              <div className="hero-type gsap-hero-el"><Type /></div>
+
+              <ul className="hero-socials gsap-hero-el">
                 {[
                   { href: "https://github.com/mdey0108/",           Icon: AiFillGithub,    title: "GitHub" },
                   { href: "https://x.com/trdevloafer",             Icon: AiOutlineTwitter, title: "Twitter" },
@@ -150,34 +229,33 @@ function Portfolio() {
                 ))}
               </ul>
 
-              <div className="hero-actions">
+              <div className="hero-actions gsap-hero-el">
                 <a href={pdf} target="_blank" rel="noreferrer" className="btn-primary-custom">
                   <AiOutlineDownload /> Download Resume
                 </a>
                 <a href="#contact" className="btn-outline-custom">./contact.sh 💬</a>
               </div>
 
-              <div className="hero-stats">
+              <div className="hero-stats gsap-hero-el">
                 {[
-                  { num: "3+", label: "Years Exp." },
+                  { num: "5+",  label: "Years Exp." },
                   { num: "10+", label: "Projects" },
-                  { num: "∞",  label: "Bugs Created" },
+                  { num: "∞",   label: "Bugs Created" },
                 ].map(({ num, label }) => (
-                  <div className="stat-item" key={label}>
-                    <div className="stat-number">{num}</div>
-                    <div className="stat-label">{label}</div>
-                  </div>
+                  <StatItem key={label} num={num} label={label} />
                 ))}
               </div>
             </Col>
 
-            <Col md={5} className="hero-avatar">
-              <div className="avatar-ring" onClick={handleAvatarClick} title="Click me 👀">
-                <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} perspective={900} style={{ width: "100%" }}>
-                  <img src={myImg} className="img-fluid" alt="Mahesh avatar" />
-                </Tilt>
-              </div>
-              {eggMsg && <p className="easter-egg-msg">{eggMsg}</p>}
+            <Col md={5} className="hero-avatar text-center" style={{ paddingBottom: 20 }}>
+              <Tilt>
+                <img
+                  src={homeLogo}
+                  alt="home pic"
+                  className="img-fluid"
+                  style={{ maxHeight: "450px" }}
+                />
+              </Tilt>
             </Col>
           </Row>
         </Container>
@@ -186,13 +264,16 @@ function Portfolio() {
         </div>
       </section>
 
-      {/* ══ ABOUT ══ */}
-      <section id="about" className="about-section">
-        <Container>
-          <h2 className="section-title">Know Who <span className="green">I'M</span></h2>
+      {/* ══════════════════════════════
+          ABOUT
+      ══════════════════════════════ */}
+      <section id="about" className="about-section" style={{ position: "relative" }}>
+        <FloatingGeometry style={{ opacity: 0.35 }} />
+        <Container style={{ position: "relative", zIndex: 2 }}>
+          <SectionTitle>Know Who <span className="green">I'M</span></SectionTitle>
           <Row className="align-items-center g-4">
             <Col md={7}>
-              <div className="about-card">
+              <div className="about-card about-card-3d" ref={aboutCardRef}>
                 <p>Hi! I'm <span className="green">Mahesh Kumar Dey</span>, from{" "}
                   <span className="green">Balrampur, Chhattisgarh</span> — a place so peaceful I had to move to
                   Kolkata just to raise my stress levels. 🗺️</p>
@@ -211,80 +292,71 @@ function Portfolio() {
                   <li><ImPointRight /> Creating Memes <span className="purple-dim">(my true calling, tbh)</span></li>
                   <li><ImPointRight /> Editing Videos <span className="purple-dim">(I do own a laptop, after all)</span></li>
                 </ul>
-                <blockquote className="hindi-quote">
-                  "वो शांत जैसे खेत, में शहर जैसा बावला ।<br />वो दूध जैसी सफेद, मैं चाय जैसा सांवला ।।"
-                  <footer>
-                    <a href="https://www.yourquote.in/mahesh-kumar-dey-n4et/quotes/"
-                       target="_blank" rel="noreferrer">— Mahesh</a>
-                  </footer>
-                </blockquote>
+
                 <button className="wisdom-btn" onClick={nextWisdom}>
                   {showWisdom ? "Another Dev Wisdom" : "Get Dev Wisdom"}
                 </button>
                 {showWisdom && <p className="wisdom-text">{devWisdom[wisdomIdx]}</p>}
               </div>
             </Col>
-            <Col md={5} className="about-img-col">
-              <img src={laptopImg} alt="about" className="img-fluid about-img" />
+            <Col md={5} className="about-img-col text-center">
+              <Tilt>
+                <img 
+                  src={laptopImg} 
+                  alt="about" 
+                  className="img-fluid" 
+                  style={{ maxHeight: "350px" }} 
+                />
+              </Tilt>
             </Col>
           </Row>
         </Container>
       </section>
 
-      {/* ══ JOURNEY ══ */}
-      <section id="journey" className="journey-section">
-        <Container>
-          <h2 className="section-title">
+      {/* ══════════════════════════════
+          JOURNEY
+      ══════════════════════════════ */}
+      <section id="journey" className="journey-section" style={{ position: "relative", overflow: "hidden" }}>
+        <FloatingGeometry style={{ opacity: 0.25 }} />
+        <Container style={{ position: "relative", zIndex: 2 }}>
+          <SectionTitle>
             My <span className="green">Journey</span>
             <span className="section-hint"> — the corporate saga</span>
-          </h2>
+          </SectionTitle>
           <Row className="g-4">
 
             {/* Experience */}
             <Col md={6}>
               <h3 className="journey-col-title">💼 Work Experience</h3>
               <div className="timeline">
-
-                <div className="timeline-item">
-                  <div className="timeline-card">
-                    <div className="timeline-date">Nov 2021 – Present · 3+ yrs</div>
-                    <div className="timeline-title">Software Engineer</div>
-                    <div className="timeline-org">Cognizant Technology Solutions · Kolkata</div>
-                    <ul className="timeline-desc">
-                      <li>Production support for enterprise-level Java / Spring Boot applications</li>
-                      <li>Developed & maintained RESTful APIs and microservices</li>
-                      <li>Built React.js frontends and integrated with backend services</li>
-                      <li>Handled incident management, root cause analysis, and L2/L3 support</li>
-                      <li>Collaborated across cross-functional teams in agile sprints</li>
-                      <li>Wrote Python scripts for automation and data processing</li>
-                    </ul>
-                    <div className="timeline-tags">
-                      {["Java", "Spring Boot", "React", "Python", "Oracle DB", "Git"].map(t => (
-                        <span key={t} className="project-tag">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="timeline-item" style={{ marginTop: "1.4rem" }}>
-                  <div className="timeline-card">
-                    <div className="timeline-date">2020 – 2021 · Training / Internship</div>
-                    <div className="timeline-title">Systems Engineer Trainee</div>
-                    <div className="timeline-org">Infosys Limited</div>
-                    <ul className="timeline-desc">
-                      <li>Completed Infosys Foundation Training Program in Java & enterprise technologies</li>
-                      <li>Worked on Java-based enterprise application development modules</li>
-                      <li>Trained in agile methodologies, SDLC, and software design patterns</li>
-                      <li>Collaborated with cross-functional teams on internal delivery projects</li>
-                    </ul>
-                    <div className="timeline-tags">
-                      {["Java", "SQL", "Agile", "SDLC", "Spring"].map(t => (
-                        <span key={t} className="project-tag">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
+                <TimelineCard
+                  delay={0}
+                  date="Jan 2022 – Present · 4+ yrs"
+                  title="Software Engineer"
+                  org="Cognizant Technology Solutions · Kolkata"
+                  bullets={[
+                    "Production support for enterprise-level Java / Spring Boot applications",
+                    "Developed & maintained RESTful APIs and microservices",
+                    "Built React.js frontends and integrated with backend services",
+                    "Handled incident management, root cause analysis, and L2/L3 support",
+                    "Collaborated across cross-functional teams in agile sprints",
+                    "Wrote Python scripts for automation and data processing",
+                  ]}
+                  tags={["Java", "Spring Boot", "React", "Python", "Oracle DB", "Git"]}
+                />
+                <TimelineCard
+                  delay={0.15}
+                  date="June 2021 – Dec 2021 · 7 mos"
+                  title="Systems Engineer Trainee"
+                  org="Infosys Limited"
+                  bullets={[
+                    "Completed Infosys Foundation Training Program in Java & enterprise technologies",
+                    "Worked on Java-based enterprise application development modules",
+                    "Trained in agile methodologies, SDLC, and software design patterns",
+                    "Collaborated with cross-functional teams on internal delivery projects",
+                  ]}
+                  tags={["Java", "SQL", "Agile", "SDLC", "Spring"]}
+                />
               </div>
             </Col>
 
@@ -292,36 +364,27 @@ function Portfolio() {
             <Col md={6}>
               <h3 className="journey-col-title">🎓 Education</h3>
               <div className="timeline">
-
-                <div className="timeline-item">
-                  <div className="timeline-card">
-                    <div className="timeline-date">2017 – 2021</div>
-                    <div className="timeline-title">B.Tech — Computer Science & Engineering</div>
-                    <div className="timeline-org">CSIT Durg, Chhattisgarh (CSVTU affiliated)</div>
-                    <ul className="timeline-desc">
-                      <li>Core subjects: DSA, DBMS, OS, Computer Networks, OOP</li>
-                      <li>Developed multiple academic projects in Java & Python</li>
-                      <li>Active participant in coding competitions and tech events</li>
-                    </ul>
-                    <div className="timeline-tags">
-                      {["Java", "Python", "C/C++", "DBMS", "Networking"].map(t => (
-                        <span key={t} className="project-tag">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="timeline-item" style={{ marginTop: "1.4rem" }}>
-                  <div className="timeline-card">
-                    <div className="timeline-date">2015 – 2017</div>
-                    <div className="timeline-title">Higher Secondary — Science (PCM)</div>
-                    <div className="timeline-org">Balrampur, Chhattisgarh</div>
-                    <ul className="timeline-desc">
-                      <li>Physics, Chemistry, Maths — where the real debugging began 🔬</li>
-                    </ul>
-                  </div>
-                </div>
-
+                <TimelineCard
+                  delay={0.05}
+                  date="2016 – 2020"
+                  title="B.Tech — Computer Science & Engineering"
+                  org="CSIT Durg, Chhattisgarh (CSVTU affiliated)"
+                  bullets={[
+                    "Core subjects: DSA, DBMS, OS, Computer Networks, OOP",
+                    "Developed multiple academic projects in Java & Python",
+                    "Active participant in coding competitions and tech events",
+                  ]}
+                  tags={["Java", "Python", "C/C++", "DBMS", "Networking"]}
+                />
+                <TimelineCard
+                  delay={0.2}
+                  date="2014 – 2015"
+                  title="Higher Secondary — Science (PCM)"
+                  org="Balrampur, Chhattisgarh"
+                  bullets={[
+                    "Physics, Chemistry, Maths — where the real debugging began 🔬",
+                  ]}
+                />
               </div>
             </Col>
 
@@ -329,57 +392,39 @@ function Portfolio() {
         </Container>
       </section>
 
-      {/* ══ SKILLS ══ */}
-      <section id="skills" className="skills-section">
-        <Container>
-          <h2 className="section-title">
+      {/* ══════════════════════════════
+          SKILLS
+      ══════════════════════════════ */}
+      <section id="skills" className="skills-section" style={{ position: "relative" }}>
+        <FloatingGeometry style={{ opacity: 0.25 }} />
+        <Container style={{ position: "relative", zIndex: 2 }}>
+          <SectionTitle>
             Professional <span className="green">Skillset</span>
-            <span className="section-hint"> — hover for honest reviews</span>
-          </h2>
-          <Techstack />
-          <p className="skills-sub-title">⚒ Daily Driver Tools</p>
-          <Toolstack />
+            <span className="section-hint"> — core languages, frameworks, & tools</span>
+          </SectionTitle>
+          <SkillsDashboard />
         </Container>
       </section>
 
-      {/* ══ PROJECTS ══ */}
+      {/* ══════════════════════════════
+          PROJECTS
+      ══════════════════════════════ */}
       <section id="projects" className="projects-section">
         <Container>
-          <h2 className="section-title">
+          <SectionTitle>
             Featured <span className="green">Projects</span>
-            <span className="section-hint"> — things I actually built</span>
-          </h2>
-          <Row className="g-4">
-            {projects.map((p, i) => (
-              <Col md={4} key={i}>
-                <div className="project-card" style={{ "--card-bg": p.color, "--card-border": p.border }}>
-                  <div className="project-emoji">{p.emoji}</div>
-                  <h3 className="project-title">{p.title}</h3>
-                  <p className="project-desc">{p.desc}</p>
-                  <div className="project-tags">
-                    {p.tags.map((t) => <span key={t} className="project-tag">{t}</span>)}
-                  </div>
-                  <div className="project-links">
-                    <a href={p.github} target="_blank" rel="noreferrer" className="project-link">
-                      <AiFillGithub /> GitHub
-                    </a>
-                    {p.demo && (
-                      <a href={p.demo} target="_blank" rel="noreferrer" className="project-link project-link-demo">
-                        <BsBoxArrowUpRight /> Live
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </Col>
-            ))}
-          </Row>
+            <span className="section-hint"> — 3D cylinder carousel</span>
+          </SectionTitle>
+          <ProjectsCarousel3D />
         </Container>
       </section>
 
-      {/* ══ CONTACT ══ */}
-      <section id="contact" className="contact-section">
-        <Container>
-          <h2 className="section-title">Let's <span className="green">Connect</span></h2>
+      {/* ══════════════════════════════
+          CONTACT
+      ══════════════════════════════ */}
+      <section id="contact" className="contact-section" style={{ position: "relative" }}>
+        <Container style={{ position: "relative", zIndex: 2 }}>
+          <SectionTitle>Let's <span className="green">Connect</span></SectionTitle>
           <p className="contact-subtitle">
             Slide into my inbox — I reply faster than my PRs get reviewed 😅
           </p>
