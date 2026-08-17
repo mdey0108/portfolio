@@ -8,55 +8,55 @@ const projectMetadata = {
     title: "MeD-App",
     desc: "A medicine delivery application designed to facilitate online order placements, prescription verification, real-time shipment tracking, and medical logistics.",
     tags: ["React", "Node.js", "Express", "MongoDB"],
-    glowColor: "rgba(0, 255, 122, 0.45)", // Green
+    glowColor: "rgba(223, 184, 118, 0.45)", // Gold
   },
   "ai-chat-app": {
     title: "ai-chat-app",
     desc: "An intelligent conversational agent and chat application. Powered by advanced LLMs, it features real-time stream responses, contextual chat history memory, custom system prompts, and a highly polished glassmorphic UI.",
     tags: ["React", "LLM API", "Node.js", "Socket.io"],
-    glowColor: "rgba(0, 240, 255, 0.45)", // Cyan
+    glowColor: "rgba(243, 229, 171, 0.45)", // Champagne
   },
   "gyaanguru.ai": {
     title: "gyaanguru.ai",
     desc: "An AI-driven personalized tutoring and learning assistant. Leverages large language models to explain complex topics, create quiz modules, and recommend custom learning roadmaps tailored to the student's progress.",
     tags: ["TypeScript", "Next.js", "LLM", "Education AI"],
-    glowColor: "rgba(255, 0, 122, 0.45)", // Pink
+    glowColor: "rgba(229, 193, 88, 0.45)", // Amber
   },
   "logkyakahenge": {
     title: "logkyakahenge",
     desc: "A smart, AI-powered log parser and analyzer. Automates reading and troubleshooting stack traces and batch execution logs, identifying root causes of system failures and suggesting direct code fixes.",
     tags: ["AI", "Log Analysis", "Automation", "Python"],
-    glowColor: "rgba(189, 0, 255, 0.45)", // Violet
+    glowColor: "rgba(197, 155, 39, 0.45)", // Bronze
   },
   "sas-manager-": {
     title: "SAS-manager-",
     desc: "An end-to-end sales and stock management dashboard. Designed for retail and inventory business flows, providing real-time item tracking, sales invoices, low-stock warnings, and historical revenue analytics.",
     tags: ["JavaScript", "Inventory", "Sales DB", "Analytics"],
-    glowColor: "rgba(255, 200, 0, 0.45)", // Gold
+    glowColor: "rgba(223, 184, 118, 0.45)", // Gold
   },
   "whoru": {
     title: "WhoRU",
     desc: "A social engineering and security demonstration tool designed to request and capture webcam or phone front-camera snapshots via link interaction.",
     tags: ["React", "Profile API", "OAuth2", "Security"],
-    glowColor: "rgba(255, 59, 92, 0.45)", // Red
+    glowColor: "rgba(229, 193, 88, 0.45)", // Amber
   },
   "xml-cleaner": {
     title: "xml-cleaner",
     desc: "A utility application for sanitizing, formatting, and purifying XML files. Removes redundant tags, handles encoding issues, formats structure indentations, and prepares files for automated database ingestion pipelines.",
     tags: ["Java", "XML Parsing", "File I/O", "Utility"],
-    glowColor: "rgba(0, 255, 122, 0.45)", // Green
+    glowColor: "rgba(197, 155, 39, 0.45)", // Bronze
   },
   "filevault-application": {
     title: "filevault-application",
     desc: "A high-security encrypted file storage and locker application. Protects sensitive documents using advanced AES-256 encryption, custom passwords, and safe decryptions.",
     tags: ["Java", "Security", "AES Cryptography", "Vault"],
-    glowColor: "rgba(255, 0, 122, 0.45)", // Pink
+    glowColor: "rgba(243, 229, 171, 0.45)", // Champagne
   },
   "api-automation": {
     title: "Api-Automation",
     desc: "A modular automation framework for RESTful API testing. Integrates automated request validation, payload checks, response time assertions, and test suite report generation.",
     tags: ["Python", "API Testing", "Automation", "PyTest"],
-    glowColor: "rgba(0, 240, 255, 0.45)", // Cyan
+    glowColor: "rgba(223, 184, 118, 0.45)", // Gold
   },
 };
 

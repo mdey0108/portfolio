@@ -6,21 +6,15 @@ import NavBar from "./Navbar";
 import Footer from "./Footer";
 import ProgressBar from "./ProgressBar";
 import BackToTop from "./BackToTop";
-import CustomCursor from "./CustomCursor";
 import Type from "./Home/Type";
 import Touch from "./Projects/Touch";
-import pdf from "../Assets/MaheshKumarResume2.0.pdf";
-import homeLogo from "../Assets/home-main.svg";
-import laptopImg from "../Assets/about.png";
-import Tilt from "react-parallax-tilt";
+import pdf from "../Assets/Mahesh_Resume.pdf";
 import { ImPointRight } from "react-icons/im";
 import {
   AiFillGithub, AiOutlineTwitter, AiFillInstagram, AiOutlineDownload,
 } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 
-import HeroScene from "./3d/HeroScene";
-import FloatingGeometry from "./3d/FloatingGeometry";
 import ProjectsCarousel3D from "./3d/ProjectsCarousel3D";
 import SkillsDashboard from "./SkillsDashboard";
 
@@ -190,7 +184,19 @@ function Portfolio() {
 
   return (
     <div className="portfolio-wrap">
-      <CustomCursor />
+      {/* ── Background Video Animation ── */}
+      <div className="video-background-container">
+        <video
+          className="video-background"
+          autoPlay
+          muted
+          playsInline
+        >
+          <source src={process.env.PUBLIC_URL + "/static/media/background_animation.mp4"} type="video/mp4" />
+        </video>
+        <div className="video-overlay" />
+      </div>
+
       <ProgressBar />
       <NavBar />
 
@@ -198,10 +204,9 @@ function Portfolio() {
           HERO
       ══════════════════════════════ */}
       <section id="home" className="hero-section">
-        <HeroScene />
         <Container style={{ position: "relative", zIndex: 2 }}>
           <Row className="hero-row align-items-center">
-            <Col md={7} className="hero-text" ref={heroTextRef}>
+            <Col md={12} className="hero-text" ref={heroTextRef}>
               <span className="hero-tag gsap-hero-el">
                 software_engineer --org="Cognizant" --mode="surviving"
               </span>
@@ -246,17 +251,6 @@ function Portfolio() {
                 ))}
               </div>
             </Col>
-
-            <Col md={5} className="hero-avatar text-center" style={{ paddingBottom: 20 }}>
-              <Tilt>
-                <img
-                  src={homeLogo}
-                  alt="home pic"
-                  className="img-fluid"
-                  style={{ maxHeight: "450px" }}
-                />
-              </Tilt>
-            </Col>
           </Row>
         </Container>
         <div className="scroll-indicator">
@@ -268,11 +262,10 @@ function Portfolio() {
           ABOUT
       ══════════════════════════════ */}
       <section id="about" className="about-section" style={{ position: "relative" }}>
-        <FloatingGeometry style={{ opacity: 0.35 }} />
         <Container style={{ position: "relative", zIndex: 2 }}>
           <SectionTitle>Know Who <span className="green">I'M</span></SectionTitle>
-          <Row className="align-items-center g-4">
-            <Col md={7}>
+          <Row className="justify-content-center g-4">
+            <Col md={10} className="mx-auto">
               <div className="about-card about-card-3d" ref={aboutCardRef}>
                 <p>Hi! I'm <span className="green">Mahesh Kumar Dey</span>, from{" "}
                   <span className="green">Balrampur, Chhattisgarh</span> — a place so peaceful I had to move to
@@ -299,16 +292,6 @@ function Portfolio() {
                 {showWisdom && <p className="wisdom-text">{devWisdom[wisdomIdx]}</p>}
               </div>
             </Col>
-            <Col md={5} className="about-img-col text-center">
-              <Tilt>
-                <img 
-                  src={laptopImg} 
-                  alt="about" 
-                  className="img-fluid" 
-                  style={{ maxHeight: "350px" }} 
-                />
-              </Tilt>
-            </Col>
           </Row>
         </Container>
       </section>
@@ -317,7 +300,6 @@ function Portfolio() {
           JOURNEY
       ══════════════════════════════ */}
       <section id="journey" className="journey-section" style={{ position: "relative", overflow: "hidden" }}>
-        <FloatingGeometry style={{ opacity: 0.25 }} />
         <Container style={{ position: "relative", zIndex: 2 }}>
           <SectionTitle>
             My <span className="green">Journey</span>
@@ -396,7 +378,6 @@ function Portfolio() {
           SKILLS
       ══════════════════════════════ */}
       <section id="skills" className="skills-section" style={{ position: "relative" }}>
-        <FloatingGeometry style={{ opacity: 0.25 }} />
         <Container style={{ position: "relative", zIndex: 2 }}>
           <SectionTitle>
             Professional <span className="green">Skillset</span>

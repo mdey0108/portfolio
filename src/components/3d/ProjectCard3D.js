@@ -28,13 +28,13 @@ export default function ProjectCard3D({ emoji, color, border, title, desc, tags,
     
     setCardStyle({
       transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04) translateZ(15px)`,
-      boxShadow: `${-rotateY * 2.2}px ${rotateX * 2.2}px 38px rgba(189, 0, 255, 0.28)`,
+      boxShadow: `${-rotateY * 2.2}px ${rotateX * 2.2}px 38px rgba(223, 184, 118, 0.28)`,
       transition: "transform 0.08s ease-out, box-shadow 0.08s ease-out",
     });
 
     setGlareStyle({
       opacity: 1,
-      background: `radial-gradient(circle at ${xPercent}% ${yPercent}%, rgba(0, 240, 255, 0.18) 0%, rgba(255, 0, 122, 0.08) 45%, rgba(0, 0, 0, 0) 75%)`,
+      background: `radial-gradient(circle at ${xPercent}% ${yPercent}%, rgba(243, 229, 171, 0.18) 0%, rgba(229, 193, 88, 0.08) 45%, rgba(0, 0, 0, 0) 75%)`,
     });
   };
 
