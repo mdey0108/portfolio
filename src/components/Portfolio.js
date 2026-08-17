@@ -20,6 +20,13 @@ import SkillsDashboard from "./SkillsDashboard";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getVideoPath = () => {
+  if (window.location.pathname.startsWith("/portfolio")) {
+    return "/portfolio/static/media/background_animation.mp4";
+  }
+  return "/static/media/background_animation.mp4";
+};
+
 /* ─── Dev wisdom pool ─── */
 const devWisdom = [
   '"It works on my machine" — a timeless classic 🖥️',
@@ -192,7 +199,7 @@ function Portfolio() {
           muted
           playsInline
         >
-          <source src={process.env.PUBLIC_URL + "/static/media/background_animation.mp4"} type="video/mp4" />
+          <source src={getVideoPath()} type="video/mp4" />
         </video>
         <div className="video-overlay" />
       </div>
